@@ -151,6 +151,8 @@
 
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+	<!-- Custom DevBalu -->
+	<script src="js/devbalu.js"></script>
 
 	</body>
 </html>

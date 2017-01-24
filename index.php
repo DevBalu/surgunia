@@ -27,11 +27,15 @@
 	}
 	$con->close();
 //END  show all folders
-// show authorization form 
-	$auth = $_GET['auth'];
-	$vasea = '';
-	if(isset($auth)){
-		$vasea .= "neam neam";
+// if user is logged in show authorization form else information about 
+	$auth = !empty($_GET['auth']);
+	$about = '';
+	if($auth){
+		$about = 'neam neam';
+	}else{
+		$about = '
+
+		';
 	}
 // END show authorization form 
 ?>
@@ -42,9 +46,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Sergio Ghenov PH</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Free HTML5 Website Template by gettemplates.co" />
-	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
-	<meta name="author" content="gettemplates.co" />
 
 	<!-- Facebook and Twitter integration -->
 	<meta property="og:title" content=""/>
@@ -72,7 +73,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<!-- Magnific Popup -->
 	<link rel="stylesheet" href="css/magnific-popup.css">
-	
+
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -95,33 +96,62 @@
 				<div class="image-bg"></div>
 				<div class="overlay"></div> 
 				<div class="row">
-					<div class="col-md-12">
-						<div id="fh5co-aside-inner">
-							<div class="row" id="fh5co-bio">
-								<div class="col-md-12">
-									<h2>About Me <?php print $vasea; ?></h2>
-								</div>
-								<div class="col-md-6">
-									<p>Sint, <a href="#">consectetur</a>, fugit. Sed, blanditiis. Autem quae perferendis totam provident, consequuntur inventore reiciendis vitae suscipit rerum repellendus facere voluptatem tenetur iure praesentium corrupti asperiores eos laborum debitis eaque maiores magnam nisi exercitationem sunt maxime! At eligendi deserunt, iusto natus molestias!</p>
-								</div>
-								<div class="col-md-6">
-									<p>Quas praesentium dolore unde delectus, nemo accusantium, qui ab illum debitis assumenda tempore molestias ipsam, eveniet repellendus officiis in vel, explicabo quos necessitatibus atque doloremque. Quae maiores delectus, magnam nam.</p>
-								</div>
-								<div class="col-md-12 fh5co-social">
-									<a href="#"><i class="icon-envelope"></i></a>
-									<a href="#"><i class="icon-twitter"></i></a>
-									<a href="#"><i class="icon-linkedin"></i></a>
-									<a href="#"><i class="icon-instagram"></i></a>
-									<a href="facebook.com"><i class="icon-google-plus"></i></a>
-									
-								</div>
-								<div class="col-md-12 fh5co-social" style="margin-top: 40px;">
-									<p>Portfolio site Photographer Sergio Ghenov<a href="index.php?auth=1"><i class="icon-unlock-alt"></i></a></p>
 
+						<ul class="nav nav-tabs">
+							<li role="presentation" class="active"><a href="#about" data-toggle="tab">ABOUT</a></li>
+							<li role="presentation"><a href="#ath" data-toggle="tab">ATH</a></li>
+						</ul>
+							<div class="col-md-12">
+								<div id="fh5co-aside-inner">
+									<div class="row" id="fh5co-bio">
+										
+										<div class="tab-content">
+											<!-- form for section about -->
+											<div class="tab-pane fade" id="ath">
+												<div class="col-md-12">
+													<div id="fh5co-aside-inner">
+														<br>
+														<div class="input-group" >
+															<input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" style="background: transparent; color: #fff;">
+														</div>
+														<div class="input-group" >
+															<input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" style="background: transparent; color: #fff;">
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- END form for section about -->
+
+											<!-- END form for section athorization -->
+											<div class="tab-pane fade in active" id="about">
+												<div class="col-md-12">
+												<br>
+													<h2>About Me</h2>
+												</div>
+												<div class="col-md-6">
+													<p>Sint, <a href="#">consectetur</a>, fugit. Sed, blanditiis. Autem quae perferendis totam provident, consequuntur inventore reiciendis vitae suscipit rerum repellendus facere voluptatem tenetur iure praesentium corrupti asperiores eos laborum debitis eaque maiores magnam nisi exercitationem sunt maxime! At eligendi deserunt, iusto natus molestias!</p>
+												</div>
+												<div class="col-md-6">
+													<p>Quas praesentium dolore unde delectus, nemo accusantium, qui ab illum debitis assumenda tempore molestias ipsam, eveniet repellendus officiis in vel, explicabo quos necessitatibus atque doloremque. Quae maiores delectus, magnam nam.</p>
+												</div>
+												<div class="col-md-12 fh5co-social">
+													<a href="#"><i class="icon-envelope"></i></a>
+													<a href="#"><i class="icon-twitter"></i></a>
+													<a href="#"><i class="icon-linkedin"></i></a>
+													<a href="#"><i class="icon-instagram"></i></a>
+													<a href="facebook.com"><i class="icon-google-plus"></i></a>
+													
+												</div>
+												<div class="col-md-12 fh5co-social" style="margin-top: 40px;">
+													<p>Portfolio site Photographer Sergio Ghenov<a href="index.php?auth=1"><i class="icon-unlock-alt"></i></a></p>
+												</div>
+											</div>
+											<!-- END form for section athorization -->
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+
 				</div>
 			</div>
 			<!-- END about me content-->
@@ -156,6 +186,8 @@
 
 		<!-- MAIN JS -->
 		<script src="js/main.js"></script>
+		<!-- Custom DevBalu -->
+		<script src="js/devbalu.js"></script>
 
 	</body>
 </html>
