@@ -1,6 +1,6 @@
 <?php 
 	require_once("php/connection.php");
-// show all folders
+	// show all folders
 	if(!empty($con)){
 		$result_folders = mysqli_query($con, "SELECT f.* FROM folders f");
 	}
@@ -26,18 +26,16 @@
 		';
 	}
 	$con->close();
-//END  show all folders
-// if user is logged in show authorization form else information about 
-	$auth = !empty($_GET['auth']);
-	$about = '';
-	if($auth){
-		$about = 'neam neam';
+	// END show all folders
+	
+	// authorization how administrator
+	session_start();
+	if(!empty($_SESSION['auth'])){
+		$indicator = 'Admin';
 	}else{
-		$about = '
-
-		';
+		// authorization how guest
+		$indicator = 'About';
 	}
-// END show authorization form 
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -88,7 +86,7 @@
 		<div id="fh5co-page">
 
 			<div class="aside-toggle btn-circle">
-				<a href="#"><span></span><em>About</em></a>
+				<a href="#"><span></span><em><?php print $indicator; ?></em></a>
 			</div>
 
 			<!-- about me content -->
@@ -98,32 +96,49 @@
 				<div class="row">
 
 						<ul class="nav nav-tabs">
-							<li role="presentation" class="active"><a href="#about" data-toggle="tab">ABOUT</a></li>
-							<li role="presentation"><a href="#ath" data-toggle="tab">ATH</a></li>
+							<?php 
+								if (!empty($_SESSION['auth'])) {
+									$imageactive = 'active';
+									print '
+										<li role="presentation"><a href="#addfolder" data-toggle="tab">ADD FOLDER</a></li>
+										<li role="presentation"><a href="#addimage" data-toggle="tab">ADD IMAGE</a></li>
+										<li><a href="php/logout.php">LOG OUT</a></li>
+										';
+
+								}else{
+									$aboutactive = 'active';
+									print '
+										<li role="presentation" class="active"><a href="#about" data-toggle="tab">ABOUT</a></li>
+										<li role="presentation"><a href="#ath" data-toggle="tab">ATH</a></li>
+									';
+								}
+							?>
 						</ul>
 							<div class="col-md-12">
 								<div id="fh5co-aside-inner">
 									<div class="row" id="fh5co-bio">
-										
+
 										<div class="tab-content">
-											<!-- form for section about -->
+											<!-- form for section athorization -->
 											<div class="tab-pane fade" id="ath">
 												<div class="col-md-12">
 													<div id="fh5co-aside-inner">
 														<br>
-														<div class="input-group" >
-															<input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" style="background: transparent; color: #fff;">
-														</div>
-														<div class="input-group" >
-															<input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" style="background: transparent; color: #fff;">
-														</div>
+														<form action="php/auth.php" method="POST">
+															<div class="input-group" >
+																<input type="text" class="form-control" name="username" placeholder="username" aria-describedby="sizing-addon3" style="background: transparent; color: #fff;">
+																<input type="text" class="form-control" name="password" placeholder="password" aria-describedby="sizing-addon2" style="background: transparent; color: #fff;">
+																<button type="submit" class="btn">auth</button>
+															</div>
+														</form>
 													</div>
 												</div>
 											</div>
-											<!-- END form for section about -->
-
 											<!-- END form for section athorization -->
-											<div class="tab-pane fade in active" id="about">
+
+
+											<!-- form for section about -->
+											<div class="tab-pane fade in <?php print $aboutactive;?>" id="about">
 												<div class="col-md-12">
 												<br>
 													<h2>About Me</h2>
@@ -143,10 +158,59 @@
 													
 												</div>
 												<div class="col-md-12 fh5co-social" style="margin-top: 40px;">
-													<p>Portfolio site Photographer Sergio Ghenov<a href="index.php?auth=1"><i class="icon-unlock-alt"></i></a></p>
+													<p>Portfolio site Photographer Sergio Ghenov</p>
 												</div>
 											</div>
-											<!-- END form for section athorization -->
+											<!-- END form for section about -->
+
+											<!-- form for section addfolder -->
+											<div class="tab-pane fade" id="addfolder">
+												<div class="col-md-12">
+													<div id="fh5co-aside-inner">
+														<form action="php/auth.php" method="POST">
+															<br>
+															<div class="row" >
+																<div class="col-sm12 col-md-4" >
+																	<input type="text" class="form-control" name="addfolder" placeholder="NAME FOLDER" aria-describedby="sizing-addon3" style="background: transparent; color: #fff;">
+																</div>
+																<div class="col-sm12 col-md-6" >
+																	<input type="file" class="form-control" id="selbgimg" name="flbg" placeholder="select image" style="background: transparent; color: #fff;">
+																</div>
+																<div class="col-sm12 col-md-2" >
+																	<button type="submit" class="btn">SUBMIT</button>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+											<!-- END form for section addfolder -->
+											
+											<!-- form for section addimage -->
+											<div class="tab-pane fade in <?php print $imageactive;?>" id="addimage">
+												<div class="col-md-12">
+													<div id="fh5co-aside-inner">
+														<br>
+														<form action="php/auth.php" method="POST">
+															<div class="row">
+																<div class="col-sm12 col-md-4" >
+																	<select type="text" class="form-control" name="folders" style="background: transparent; color: pink;">
+																		
+																	</select>
+																</div>
+																<div class="col-sm12 col-md-6" >
+																	<input type="file" class="form-control" name="selectimage" placeholder="select image" style="background: transparent; color: #fff;">
+																</div>
+																<div class="col-sm12 col-md-2" >
+																	<button type="submit" class="btn">SUBMIT</button>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+											<!-- END form for section addimage -->
+										
 										</div>
 									</div>
 								</div>
