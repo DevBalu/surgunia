@@ -2,10 +2,11 @@
 	require_once("php/connection.php");
 	// show all folders
 	if(!empty($con)){
-		$result_folders = mysqli_query($con, "SELECT f.* FROM folders f");
+		$result_folders = mysqli_query($con, "SELECT f.* FROM folders f ORDER BY id DESC");
 	}
 
 	$folders = "";
+	$selectfolders = "";
 	while($resmaps = $result_folders->fetch_Object()){
 		$folders .= '
 			<div class="grid-item item animate-box" data-animate-effect="fadeIn">
@@ -24,6 +25,7 @@
 				</a>
 			</div>
 		';
+		$selectfolders .= '<option value="' . $resmaps->id . '">' . $resmaps->name . '</option>'; 
 	}
 	$con->close();
 	// END show all folders
@@ -167,11 +169,11 @@
 											<div class="tab-pane fade" id="addfolder">
 												<div class="col-md-12">
 													<div id="fh5co-aside-inner">
-														<form action="php/auth.php" method="POST">
+														<form action="php/addcontent.php" method="POST" enctype="multipart/form-data">
 															<br>
 															<div class="row" >
 																<div class="col-sm12 col-md-4" >
-																	<input type="text" class="form-control" name="addfolder" placeholder="NAME FOLDER" aria-describedby="sizing-addon3" style="background: transparent; color: #fff;">
+																	<input type="text" class="form-control" name="namefolder" placeholder="NAME FOLDER" aria-describedby="sizing-addon3" style="background: transparent; color: #fff;">
 																</div>
 																<div class="col-sm12 col-md-6" >
 																	<input type="file" class="form-control" id="selbgimg" name="flbg" placeholder="select image" style="background: transparent; color: #fff;">
@@ -191,17 +193,20 @@
 												<div class="col-md-12">
 													<div id="fh5co-aside-inner">
 														<br>
-														<form action="php/auth.php" method="POST">
+														<form action="php/addcontent.php" method="POST" enctype="multipart/form-data">
 															<div class="row">
-																<div class="col-sm12 col-md-4" >
+																<div class="col-sm12 col-md-4" style="padding-left: 5px; padding-right: 0px;">
 																	<select type="text" class="form-control" name="folders" style="background: transparent; color: pink;">
-																		
+																		<?php print $selectfolders; ?>
 																	</select>
 																</div>
-																<div class="col-sm12 col-md-6" >
-																	<input type="file" class="form-control" name="selectimage" placeholder="select image" style="background: transparent; color: #fff;">
+																<div class="col-sm12 col-md-2" style="padding-left: 5px; padding-right: 0px;">
+																	<input type="file" class="form-control" name="img" placeholder="select image" style="background: transparent; color: #fff; padding: 10px 12px;">
 																</div>
-																<div class="col-sm12 col-md-2" >
+																<div class="col-sm12 col-md-4" style="padding-left: 5px; padding-right: 0px;">
+																	<input type="text" class="form-control" name="imgname" placeholder="select image" style="background: transparent; color: #fff;">
+																</div>
+																<div class="col-sm12 col-md-2" style="padding-left: 5px; padding-right: 0px;">
 																	<button type="submit" class="btn">SUBMIT</button>
 																</div>
 															</div>
@@ -210,7 +215,7 @@
 												</div>
 											</div>
 											<!-- END form for section addimage -->
-										
+
 										</div>
 									</div>
 								</div>
